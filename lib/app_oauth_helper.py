@@ -41,8 +41,8 @@ PROVIDERS = {
                  "profile_email_url":"http://localhost:8000/api/user",
                  "profile_email_key":"email",
                  "profile_account_key":"id",
-                 "client_id":"mbkJdQRYVbfNEQ2Ej4ArVuQWVimIRiPbOXG2tzym",
-                 "client_secret":"DsVSXYsA5dLLN7Aya6XrrwbxSVj8W1MOhOU2Qxi0ggRaUDklpG6ZdE44DudrVGqRUrP0Y3VUqKmfjlBh9hHCU8MuqNgie9BD72y0dhLXniCM3TyPhhaWhrTZvttg0Jvn",
+                 "client_id":"vx8S4bijGuMciQZpqkxmJskCxqIfWZXe78OulMzq",
+                 "client_secret":"ITkgjOBAtvtdyqPlg47lkexmc1kF3I9wGNOHcqZkigqNtzFKcANwV2zpvhb101KiwTTJ2zMMuHqRwFGcsFo86YN96IrzJ08k5N1MtyaLUvIfGHipyd3g6rgybqKLYww2",
                  "scope":[],
                  "optional_params":{"access_type":"offline", "approval_prompt":"force"} # {'<parameter_name>': '<value>'} that needs to be sent
                  }                 
@@ -92,6 +92,7 @@ def init(provider,redirect_url):
   optional_params = {}
   if (PROVIDERS[provider]).has_key("optional_params"):
     optional_params = PROVIDERS[provider]["optional_params"]
+  os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
   authorization_url = client.prepare_request_uri(auth_url, redirect_uri=redirect_url,state=state, scope=scope,**optional_params)
   return client, str(authorization_url), state
 
