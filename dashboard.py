@@ -437,22 +437,11 @@ class OAuthLoginPage(AppDashboard):
     """ Handler for GET requests. """
     logging.info("LoginPage: continue -> {0}".format(
       self.request.get('continue')))
-    self.redirect("/thejtest")
 
-    # user_email = self.request.get('HTTP_SHIB_INETORGPERSON_MAIL').strip()\
-    #   .lower()
-    # logging.info("LoginPage: user_email: {0}".format(user_email))
-    # if user_email:
-    #   self.redirect("{1}/users/shibboleth?continue={0}".format(
-    #     self.request.get('continue'),
-    #     AppDashboardHelper.SHIBBOLETH_CONNECTOR))
-
-    # target = '{0}/users/shibboleth?continue={1}'.format(
-    #   AppDashboardHelper.SHIBBOLETH_CONNECTOR,
-    #   self.request.get('continue'))
-    # self.redirect('{0}/Shibboleth.sso/Login?target={1}'.format(
-    #   AppDashboardHelper.SHIBBOLETH_CONNECTOR,
-    #   urllib.quote(target, safe='')))
+    continue_url = self.request.get('continue')
+    oauth_redirect_page = AppDashboardHelper.get_login_host()+"/users/oauth"
+    client, authorization_url, state = app_oauth_helper.init(OAUTH2_PROVIDER,oauth_redirect_page)
+    self.redirect(authorization_url)
 
 
 class ShibbolethLoginPage(AppDashboard):
@@ -490,7 +479,7 @@ class OAuthLoginRedirect(AppDashboard):
   """ Class that handles the Shibboleth redirect. """
 
   # The path for the Shibboleth redirect.
-  PATH = '/users/shibboleth'
+  PATH = '/users/oauth'
 
   def get(self):
     """ Handler for GET requests. """
