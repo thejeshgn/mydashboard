@@ -486,6 +486,17 @@ class ShibbolethLoginPage(AppDashboard):
       AppDashboardHelper.SHIBBOLETH_CONNECTOR,
       urllib.quote(target, safe='')))
 
+class OAuthLoginRedirect(AppDashboard):
+  """ Class that handles the Shibboleth redirect. """
+
+  # The path for the Shibboleth redirect.
+  PATH = '/users/shibboleth'
+
+  def get(self):
+    """ Handler for GET requests. """
+      self.redirect("/red")
+
+
 class ShibbolethRedirect(AppDashboard):
   """ Class that handles the Shibboleth redirect. """
 
