@@ -487,7 +487,7 @@ class OAuthLoginRedirect(AppDashboard):
   def get(self):
     """ Handler for GET requests. """
     state = self.request.get('state')
-    provider = self.request.get('provider')
+    provider = AppDashboardHelper.OAUTH2_PROVIDER
     #oauth_redirect_page = self.helper.get_login_host()+"/users/oauth"
     oauth_redirect_page = "https://192.168.33.10:1443/users/oauth"
     
