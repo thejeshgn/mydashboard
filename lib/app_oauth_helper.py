@@ -1,6 +1,7 @@
 
-import uuid
+import base64
 import json
+import uuid
 
 from oauthlib import oauth2
 from oauthlib.oauth2 import WebApplicationClient
@@ -76,16 +77,22 @@ def make_request(url, headers, body, method="POST"):
       return resp, content
 
 
-def init(provider,redirect_url):
+def init(provider,redirect_url, continue_url):
   scope = PROVIDERS[provider]['scope']
   client_id = PROVIDERS[provider]['client_id']
   auth_url = PROVIDERS[provider]['auth_url']
   
   #design a better way to create state, 
-  state = str(uuid.uuid4())
+  state_unique = str(uuid.uuid4())
   #may as below
   #from webapp2_extras import security
   #state = security.generate_random_string(30, pool=security.ASCII_PRINTABLE)
+
+  state_dict = {}
+  state_dict['random'] = state_unique
+  state_dict['continue_url'] = continue_url
+  state_string = json.dumps(state_dict)
+  state = base64.urlsafe_b64encode(state_string)
 
   client = WebApplicationClient(client_id=client_id,state=state)
 

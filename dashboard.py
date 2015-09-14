@@ -9,9 +9,11 @@ Engine applications.
 # pylint: disable-msg=E1101
 # pylint: disable-msg=W0613
 
+import base64
 import cgi
 import datetime
 import jinja2
+import json
 import logging
 import os
 import re
@@ -402,7 +404,7 @@ class LoginPage(AppDashboard):
       flash_message = 'Incorrect username / password combination. '\
         'Please try again.'
       show_create_account = True
-      if AppDashboardHelper.USE_SHIBBOLETH:
+      if AppDashboardHelper.USE_SHIBBOLETH or AppDashboardHelper.USE_OAUTH2:
         show_create_account = False
       self.render_page(page='users', template_file=self.TEMPLATE,
         values={
@@ -443,7 +445,7 @@ class OAuthLoginPage(AppDashboard):
     continue_url = self.request.get('continue')
     #oauth_redirect_page = self.helper.get_login_host()+"/users/oauth"
     oauth_redirect_page = "https://192.168.33.10:1443/users/oauth"
-    client, authorization_url, state = app_oauth_helper.init(AppDashboardHelper.OAUTH2_PROVIDER,oauth_redirect_page)
+    client, authorization_url, state = app_oauth_helper.init(AppDashboardHelper.OAUTH2_PROVIDER,oauth_redirect_page, continue_url=continue_url)
     self.redirect(authorization_url)
 
 
@@ -487,6 +489,11 @@ class OAuthLoginRedirect(AppDashboard):
   def get(self):
     """ Handler for GET requests. """
     state = self.request.get('state')
+
+    state_json = base64.urlsafe_b64decode(state)
+    state_dict = json.loads(state_json)
+    continue_url = state_dict['continue_url']
+
     provider = AppDashboardHelper.OAUTH2_PROVIDER
     #oauth_redirect_page = self.helper.get_login_host()+"/users/oauth"
     oauth_redirect_page = "https://192.168.33.10:1443/users/oauth"
@@ -501,8 +508,8 @@ class OAuthLoginRedirect(AppDashboard):
     user_app_list = self.helper.get_user_app_list(user_email)
     self.helper.set_appserver_cookie(user_email, user_app_list, self.response)
 
-    if self.request.get('continue') != '':
-      continue_param = urllib.quote(self.request.get('continue'), safe='')
+    if continue_url != '':
+      continue_param = urllib.quote(continue_url, safe='')
       redirect_url = '/users/confirm?continue={1}'.format(continue_param)
       self.redirect(redirect_url, self.response)
     else:
