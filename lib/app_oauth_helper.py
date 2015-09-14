@@ -41,8 +41,8 @@ PROVIDERS = {
                  "profile_email_url":"http://192.168.1.125:8080/api/user",
                  "profile_email_key":"email",
                  "profile_account_key":"id",
-                 "client_id":"vx8S4bijGuMciQZpqkxmJskCxqIfWZXe78OulMzq",
-                 "client_secret":"ITkgjOBAtvtdyqPlg47lkexmc1kF3I9wGNOHcqZkigqNtzFKcANwV2zpvhb101KiwTTJ2zMMuHqRwFGcsFo86YN96IrzJ08k5N1MtyaLUvIfGHipyd3g6rgybqKLYww2",
+                 "client_id":"tCkQZcxj7pR3PFmucO8jcsGxIBvlTo3C8300RwIb",
+                 "client_secret":"MdavyDs1c0ue7lAs3hsHnwyNM0SmTGEIXCkmQX2sH2KKtlACxNbF06Nqefgf1SqpX9MgEY3j4VIe90mTPhu1gzZGlBe3O6QAuEecxCIjB418FzsfRsF3HOKKPg7RUs7R",
                  "scope":[],
                  "optional_params":{"access_type":"offline", "approval_prompt":"force"} # {'<parameter_name>': '<value>'} that needs to be sent
                  }                 
