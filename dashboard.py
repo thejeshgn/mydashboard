@@ -420,6 +420,41 @@ class LoginPage(AppDashboard):
       'show_create_account': show_create_account
     })
 
+
+class OAuthLoginPage(AppDashboard):
+  """ Class to handle requests to the OAuth login page. """
+
+  # The path for the OAuth login page.
+  PATH = '/login'
+
+  # Another path that points to the login page.
+  ALIAS = '/users/login'
+
+  # Another path that points to the login page.
+  ALIAS_2 = '/users/authenticate'
+
+  def get(self):
+    """ Handler for GET requests. """
+    logging.info("LoginPage: continue -> {0}".format(
+      self.request.get('continue')))
+    self.redirect("/thejtest")
+
+    # user_email = self.request.get('HTTP_SHIB_INETORGPERSON_MAIL').strip()\
+    #   .lower()
+    # logging.info("LoginPage: user_email: {0}".format(user_email))
+    # if user_email:
+    #   self.redirect("{1}/users/shibboleth?continue={0}".format(
+    #     self.request.get('continue'),
+    #     AppDashboardHelper.SHIBBOLETH_CONNECTOR))
+
+    # target = '{0}/users/shibboleth?continue={1}'.format(
+    #   AppDashboardHelper.SHIBBOLETH_CONNECTOR,
+    #   self.request.get('continue'))
+    # self.redirect('{0}/Shibboleth.sso/Login?target={1}'.format(
+    #   AppDashboardHelper.SHIBBOLETH_CONNECTOR,
+    #   urllib.quote(target, safe='')))
+
+
 class ShibbolethLoginPage(AppDashboard):
   """ Class to handle requests to the Shibboleth login page. """
 
@@ -1171,6 +1206,13 @@ if AppDashboardHelper.USE_SHIBBOLETH:
     (ShibbolethLoginPage.ALIAS, ShibbolethLoginPage),
     (ShibbolethLoginPage.ALIAS_2, ShibbolethLoginPage),
     (ShibbolethRedirect.PATH, ShibbolethRedirect)
+  ])
+elif AppDashboardHelper.USE_OAUTH2:
+  dashboard_pages.extend([
+    (OAuthLoginPage.PATH, OAuthLoginPage),
+    (OAuthLoginPage.ALIAS, OAuthLoginPage),
+    (OAuthLoginPage.ALIAS_2, OAuthLoginPage),
+    (OAuthLoginRedirect.PATH, OAuthLoginRedirect)
   ])
 else:
   dashboard_pages.extend([

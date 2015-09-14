@@ -147,6 +147,11 @@ class AppDashboardHelper(object):
   # shibboleth IdP.
   SHIBBOLETH_LOGOUT_URL = SHIBBOLETH_CONNECTOR + '/Shibboleth.sso/Logout'
 
+  # Indicates whether or not to use oauth 2 for authentication.
+  USE_OAUTH2 = True
+  OAUTH2_PROVIDER = "our"
+
+
   def __init__(self):
     """ Sets up SOAP client fields, to avoid creating a new SOAP connection for
     every SOAP call.
