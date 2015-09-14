@@ -50,8 +50,7 @@ PROVIDERS = {
 }
 
 #================FOR TESTING =========================
-provider = "our"
-redirect_url = "http://localhost:8080/hello"
+#Remove it everywhere
 import os 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 #======================================================

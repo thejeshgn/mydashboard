@@ -140,7 +140,7 @@ class AppDashboard(webapp2.RequestHandler):
       A str with the navigation bar rendered.
     """
     show_create_account = True
-    if AppDashboardHelper.USE_SHIBBOLETH:
+    if AppDashboardHelper.USE_SHIBBOLETH or AppDashboardHelper.USE_OAUTH2:
       show_create_account = False
     return self.render_template(template_file='shared/navigation.html',
       values={'show_create_account': show_create_account})
@@ -417,7 +417,7 @@ class LoginPage(AppDashboard):
   def get(self):
     """ Handler for GET requests. """
     show_create_account = True
-    if AppDashboardHelper.USE_SHIBBOLETH:
+    if AppDashboardHelper.USE_SHIBBOLETH or AppDashboardHelper.USE_OAUTH2:
       show_create_account = False
     self.render_page(page='users', template_file=self.TEMPLATE, values={
       'continue': self.request.get('continue'),

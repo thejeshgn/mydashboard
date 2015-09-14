@@ -1,2 +1,5 @@
 *.pyc
 *.log
+lib/local_host.py
+lib/secret_key.py
+lib/uaserver_host.py
