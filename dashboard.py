@@ -494,7 +494,7 @@ class OAuthLoginRedirect(AppDashboard):
     callback_url = self.request.url
 
     token_content = app_oauth_helper.process_callback(callback_url, state, provider, oauth_redirect_page)
-    user = get_user(token_content,provider)
+    user = app_oauth_helper.get_user(token_content,provider)
     user_email = user[0]
     user_id = user[1]
     self.helper.create_token(user_email, user_email)
