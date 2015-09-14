@@ -105,11 +105,11 @@ def process_callback(callback_url, state, provider, redirect_url):
   client_id = PROVIDERS[provider]['client_id']
   scope = PROVIDERS[provider]['scope']
   client = WebApplicationClient(client_id=client_id,state=state)
-
+  os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
   response = client.parse_request_uri_response(callback_url, state=state) 
   print str(response)
 
-
+  os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
   token_request_body = client.prepare_request_body(client_id=client_id, code=response['code'], body='',redirect_uri=redirect_url, client_secret=client_secret)
   token_url = PROVIDERS[provider]['token_url']
   token_url_method = PROVIDERS[provider]['token_url_method']
