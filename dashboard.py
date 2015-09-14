@@ -442,7 +442,7 @@ class OAuthLoginPage(AppDashboard):
 
     continue_url = self.request.get('continue')
     oauth_redirect_page = self.helper.get_login_host()+"/users/oauth"
-    client, authorization_url, state = app_oauth_helper.init(OAUTH2_PROVIDER,oauth_redirect_page)
+    client, authorization_url, state = app_oauth_helper.init(AppDashboardHelper.OAUTH2_PROVIDER,oauth_redirect_page)
     self.redirect(authorization_url)
 
 

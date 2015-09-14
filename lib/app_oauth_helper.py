@@ -93,7 +93,7 @@ def init(provider,redirect_url):
   if (PROVIDERS[provider]).has_key("optional_params"):
     optional_params = PROVIDERS[provider]["optional_params"]
   authorization_url = client.prepare_request_uri(auth_url, redirect_uri=redirect_url,state=state, scope=scope,**optional_params)
-  return client, authorization_url, state
+  return client, str(authorization_url), state
 
 
 
