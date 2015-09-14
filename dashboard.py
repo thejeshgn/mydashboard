@@ -41,6 +41,8 @@ from app_dashboard_data import InstanceInfo
 from app_dashboard_data import RequestInfo
 from app_dashboard_data import AppStatus
 
+import app_oauth_helper
+
 from dashboard_logs import AppLogLine
 from dashboard_logs import RequestLogLine
 
@@ -439,7 +441,7 @@ class OAuthLoginPage(AppDashboard):
       self.request.get('continue')))
 
     continue_url = self.request.get('continue')
-    oauth_redirect_page = AppDashboardHelper.get_login_host()+"/users/oauth"
+    oauth_redirect_page = self.helper.get_login_host()+"/users/oauth"
     client, authorization_url, state = app_oauth_helper.init(OAUTH2_PROVIDER,oauth_redirect_page)
     self.redirect(authorization_url)
 
@@ -483,7 +485,7 @@ class OAuthLoginRedirect(AppDashboard):
 
   def get(self):
     """ Handler for GET requests. """
-      self.redirect("/red")
+    self.redirect("/red")
 
 
 class ShibbolethRedirect(AppDashboard):
