@@ -486,7 +486,27 @@ class OAuthLoginRedirect(AppDashboard):
 
   def get(self):
     """ Handler for GET requests. """
-    self.redirect("/red")
+    state = self.request.get('state')
+    provider = self.request.get('provider')
+    #oauth_redirect_page = self.helper.get_login_host()+"/users/oauth"
+    oauth_redirect_page = "https://192.168.33.10:1443/users/oauth"
+    
+    callback_url = self.request.url
+
+    token_content = app_oauth_helper.process_callback(callback_url, state, provider, oauth_redirect_page)
+    user = get_user(token_content,provider)
+    user_email = user[0]
+    user_id = user[1]
+    self.helper.create_token(user_email, user_email)
+    user_app_list = self.helper.get_user_app_list(user_email)
+    self.helper.set_appserver_cookie(user_email, user_app_list, self.response)
+
+    if self.request.get('continue') != '':
+      continue_param = urllib.quote(self.request.get('continue'), safe='')
+      redirect_url = '/users/confirm?continue={1}'.format(continue_param)
+      self.redirect(redirect_url, self.response)
+    else:
+      self.redirect('/', self.response)
 
 
 class ShibbolethRedirect(AppDashboard):
