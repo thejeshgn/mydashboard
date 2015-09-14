@@ -443,8 +443,8 @@ class OAuthLoginPage(AppDashboard):
       self.request.get('continue')))
 
     continue_url = self.request.get('continue')
-    #oauth_redirect_page = self.helper.get_login_host()+"/users/oauth"
-    oauth_redirect_page = "https://192.168.33.10:1443/users/oauth"
+    oauth_redirect_page = "https://"+self.helper.get_login_host()+":1443/users/oauth"
+    #oauth_redirect_page = "https://192.168.33.10:1443/users/oauth"
     client, authorization_url, state = app_oauth_helper.init(AppDashboardHelper.OAUTH2_PROVIDER,oauth_redirect_page, continue_url=continue_url)
     self.redirect(authorization_url)
 
@@ -490,13 +490,13 @@ class OAuthLoginRedirect(AppDashboard):
     """ Handler for GET requests. """
     state = self.request.get('state')
 
-    state_json = base64.urlsafe_b64decode(state)
+    state_json = base64.urlsafe_b64decode(str(state))
     state_dict = json.loads(state_json)
-    continue_url = state_dict['continue_url']
+    continue_url = str(state_dict['continue_url'])
 
     provider = AppDashboardHelper.OAUTH2_PROVIDER
-    #oauth_redirect_page = self.helper.get_login_host()+"/users/oauth"
-    oauth_redirect_page = "https://192.168.33.10:1443/users/oauth"
+    oauth_redirect_page = "https://"+self.helper.get_login_host()+":1443/users/oauth"
+    #oauth_redirect_page = "https://192.168.33.10:1443/users/oauth"
     
     callback_url = self.request.url
 
@@ -510,8 +510,8 @@ class OAuthLoginRedirect(AppDashboard):
 
     if continue_url != '':
       continue_param = urllib.quote(continue_url, safe='')
-      redirect_url = '/users/confirm?continue={1}'.format(continue_param)
-      self.redirect(redirect_url, self.response)
+      #redirect_url = '/users/confirm?continue={1}'.format(continue_param)
+      self.redirect(continue_url, self.response)
     else:
       self.redirect('/', self.response)
 
