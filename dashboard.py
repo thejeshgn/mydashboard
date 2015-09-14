@@ -384,6 +384,7 @@ class LoginPage(AppDashboard):
 
   def get(self):
     """ Handler for GET requests. """
+
     self.render_page(page='users', template_file=self.TEMPLATE, values={
       'continue' : self.request.get('continue')
     })
@@ -1112,6 +1113,20 @@ app = webapp2.WSGIApplication([ ('/', StatusPage),
                                 ('/change-password', ChangePasswordPage)
                               ], debug=True)
 
+if AppDashboardHelper.USE_OAUTH2:
+  dashboard_pages.extend([
+    ('/users/login', LoginPage),
+    ('/users/authenticate', LoginPage),
+    ('/login', LoginPage),
+  ])
+else:
+  dashboard_pages.extend([
+    ('/users/login', LoginPage),
+    ('/users/authenticate', LoginPage),
+    ('/login', LoginPage),
+    ('/users/new', NewUserPage),
+    ('/users/create', NewUserPage)
+  ])  
 
 def handle_404(_, response, exception):
   """ Handles 404, page not found exceptions. """
