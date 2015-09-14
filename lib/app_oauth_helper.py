@@ -35,10 +35,10 @@ PROVIDERS = {
                  "optional_params":{"access_type":"offline", "approval_prompt":"force"} # {'<parameter_name>': '<value>'} that needs to be sent
                  },
   'our': {"type":"oauth2",
-                 "auth_url":"http://localhost:8000/o/authorize", 
-                 "token_url":"http://localhost:8000/o/token/",
+                 "auth_url":"http://192.168.1.125:8080/o/authorize", 
+                 "token_url":"http://192.168.1.125:8080/o/token/",
                  "token_url_method":"POST",
-                 "profile_email_url":"http://localhost:8000/api/user",
+                 "profile_email_url":"http://192.168.1.125:8080/api/user",
                  "profile_email_key":"email",
                  "profile_account_key":"id",
                  "client_id":"vx8S4bijGuMciQZpqkxmJskCxqIfWZXe78OulMzq",
