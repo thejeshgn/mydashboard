@@ -1,0 +1,1 @@
+GLOBAL_SECRET_KEY = '977c0fecfe904af4bca328ba53c1e0e2'
